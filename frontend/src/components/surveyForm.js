@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { Button } from '@blueprintjs/core';
-const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey }) => {
-    const [title, setTitle] = useState('');
+import { Button ,Icon} from '@blueprintjs/core';
+import { IconNames } from '@blueprintjs/icons';
+import "../App.css";
+const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey,setFormVisible }) => {
+    const [questionName, setQuestionName] = useState('');
     const [questionType, setQuestionType] = useState('single-choice');
     const [answerOptions, setAnswerOptions] = useState(['', '', '', '']);
 
     const handleTitleChange = (e) => {
-        setTitle(e.target.value);
+        setQuestionName(e.target.value);
     };
 
     const handleQuestionTypeChange = (e) => {
@@ -23,14 +25,14 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey }) => {
         // Save the current question and its answer type
         
         const questionData = {
-            title,
+            title:questionName,
             question_type: questionType,
             answer_option: questionType === 'single-choice' || questionType === 'multiple-choice' ? answerOptions : null,
         };
         onCreateNextQuestion(questionData);
         // Reset the form for the next question
        
-        setTitle('');
+        setQuestionName('');
         setQuestionType('single-choice');
         setAnswerOptions(['', '', '', '']);
     };
@@ -38,20 +40,26 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey }) => {
     const handleCompleteSurvey = () => {
         // Save the current question and complete the survey
         const questionData = {
-            title,
-            question_type: questionType,
-            answer_option: questionType === 'single-choice' || questionType === 'multiple-choice' ? answerOptions : null,
+          title:questionName,
+          question_type: questionType,
+          answer_option: questionType === 'single-choice' || questionType === 'multiple-choice' ? answerOptions : null,
         };
         onCompleteSurvey(questionData);
     };
-
+    const handleFormClose=()=>{
+      setFormVisible(false);
+    }
     return (
       
-        <div>
+        <div className='new-survey-form'>
             <h4>Create a New Question</h4>
+            <button onClick={handleFormClose} className="close-btn">
+              {/* Blueprint cross icon */}
+              <Icon icon={IconNames.CROSS} />
+            </button>
             <div style={{margin:"2px"}}>
                 <label><strong>Question Title:</strong></label>
-                <input type="text" value={title} onChange={handleTitleChange} style={{marginLeft: "8px"}} />
+                <input type="text" value={questionName} onChange={handleTitleChange} style={{marginLeft: "8px"}} />
             </div>
             <div style={{margin:"2px"}}>
                 <label><strong>Question Type:</strong> </label>

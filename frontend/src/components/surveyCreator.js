@@ -2,7 +2,9 @@ import React, { useRef, useState } from 'react';
 import CreateQuestionForm from './surveyForm';
 import "../App.css";
 import { Toaster, Intent } from '@blueprintjs/core';
+import axios from 'axios';
 const SurveyCreator = ({setFormVisible}) => {
+    const [surveyName,setSurveyName]=useState('')
     const [questions, setQuestions] = useState([]);
     const toasterRef=useRef(null);
     const handleCreateNextQuestion = (questionData) => {
@@ -15,7 +17,7 @@ const SurveyCreator = ({setFormVisible}) => {
         // });
     };
 
-    const handleCompleteSurvey = (questionData) => {
+    const handleCompleteSurvey = async (questionData) => {
         // Save the last question and complete the survey
         setQuestions((prevQuestions) => [...prevQuestions, questionData]);
         console.log('Survey Completed with Questions:', [...questions, questionData]);
@@ -25,15 +27,37 @@ const SurveyCreator = ({setFormVisible}) => {
         // });
         setFormVisible(false);
         // Here you can also send the questions to your backend API
-    };
+        const surveyData={
+            name: surveyName,
+            questions:[...questions,questionData]
+        }
+        try{
+            const response= await axios.post('http://localhost:8000/api/surveys/create',surveyData, {
+                headers:{
+                    "Content-Type":'application/json',
+                }
+            });
 
+        }
+        catch(error){
+            console.log("error while updating survey data into DB",error);
+        }
+    };
+    const handleSurveyChange=(e)=>{
+        setSurveyName(e.target.value)
+    }
     return (
         <div className='survey-create-form-container'>
             {/* <Toaster ref={toasterRef}></Toaster> */}
             <h1>Create Survey</h1>
+            <div>
+                <label><strong>Survey Name:</strong></label>
+                <input type='text' value={surveyName} onChange={handleSurveyChange} style={{marginLeft: "8px"}}></input>
+            </div>
             <CreateQuestionForm 
                 onCreateNextQuestion={handleCreateNextQuestion} 
                 onCompleteSurvey={handleCompleteSurvey} 
+                setFormVisible={setFormVisible}
             />
         </div>
     );

@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-         <Dashboard setFormVisible={setFormVisible}></Dashboard>
+         <Dashboard setFormVisible={setFormVisible} formVisible={formVisible}></Dashboard>
         {formVisible && <SurveyCreator setFormVisible={setFormVisible} ></SurveyCreator>}
       </header>
     </div>

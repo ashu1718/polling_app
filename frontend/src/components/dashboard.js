@@ -5,7 +5,7 @@ import SurveyCard from "./surveyCard";
 import "../App.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { Button } from "@blueprintjs/core";
-const Dashboard = ({setFormVisible}) => {
+const Dashboard = ({setFormVisible, formVisible}) => {
   const [surveys, setSurveys] = useState([]);
   
   useEffect(() => {
@@ -15,7 +15,7 @@ const Dashboard = ({setFormVisible}) => {
         setSurveys(response.data);
       })
       .catch(error => console.error("Error fetching surveys:", error));
-  }, []);
+  }, [formVisible]);
   
   const handleSurveyDelete = (id) => {
     axios.delete(`http://localhost:8000/api/surveys/delete/${id}`)
@@ -38,7 +38,7 @@ const Dashboard = ({setFormVisible}) => {
     setFormVisible(true)
   }
   return (
-    <div className="dashoard-container">
+    <div className={`dashoard-container ${formVisible===true ? "blur-background" : ""}`} >
         <div className="dashboard-header">
           <h2>Survey Dashboard</h2> 
           <Button onClick={handleCreateSurvey} text="Create New Survey" minimal={true} intent="primary" />

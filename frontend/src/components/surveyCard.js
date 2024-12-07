@@ -33,7 +33,7 @@ const SurveyCard = ({ survey, onDelete, onClose }) => {
                 </h2>
                 <p><strong>Number of Steps:</strong> {survey.questions.length}</p>
                 <p><strong>Status:</strong> {survey.status}</p>
-                <p><strong>Creation Date:</strong> {new Date(survey.creation_date).toLocaleDateString()}</p>
+                <p><strong>Creation Date:</strong> {new Date(survey.created_at?.replace(' ','T'))?.toLocaleDateString()}</p>
 
                 <Button
                 onClick={handleDeleteSurvey}

@@ -3,8 +3,9 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Survey
+from .models import Survey,Question
 from .serializers import SurveySerializer
+from django.utils import timezone
 
 
 # GET /api/surveys/ - List all surveys
@@ -16,14 +17,13 @@ def get_surveys(request):
 
 
 # POST /api/surveys/ - Create a new survey
-@csrf_exempt
 @api_view(['POST'])
 def create_survey(request):
-    if request.method == 'POST':
-        serializer = SurveySerializer(data=request.data)
-        if serializer.is_valid():
-            survey = serializer.save()
-            return Response(SurveySerializer(survey).data, status=status.HTTP_201_CREATED)
+    serializer = SurveySerializer(data=request.data)
+    if serializer.is_valid():
+        survey = serializer.save()
+        return Response(SurveySerializer(survey).data, status=status.HTTP_201_CREATED)
+    else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

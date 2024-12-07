@@ -20,7 +20,25 @@ body{
 
 }
 .survey-create-form-container{
-  z-index: 100;
+  z-index: 1000;
   border: 1px solid black;
+  width: 60%;
+  position: relative;
+  top: 40%;
+  left: 20%;
+  background-color: rgba(163, 216, 198, 0.307);
 }
+.blur-background {
+  filter: blur(5px);
+  transition: filter 0.3s ease;
+}
+.close-btn{
+  position: absolute;
+  top: 1px;
+  right:1px;
+  border: none;
+  background-color: transparent;
+
+}
+
 

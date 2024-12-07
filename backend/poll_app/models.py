@@ -11,7 +11,7 @@ class Testing(models.Model):
 
 class Survey(models.Model):
     name = models.CharField(max_length=100)
-    status = models.CharField(max_length=20, choices=[('open', 'Open'), ('closed', 'Closed')])
+    status = models.CharField(max_length=20, default='open')
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
@@ -22,7 +22,7 @@ class Question(models.Model):
     survey = models.ForeignKey(Survey, related_name='questions', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     question_type = models.CharField(max_length=20, choices=[('single-choice', 'Single-choice'), ('multiple-choice', 'Multiple-choice'), ('text', 'Text')])
-    # answer_option=models.CharField(max_length=255, null=True)
+    answer_option=models.CharField(max_length=255, null=True)
     def __str__(self):
         return self.title
 
