@@ -1,0 +1,26 @@
+
+body{
+  background-color: aliceblue;
+  text-align: center;
+}
+.dashboard-container{
+  width: 100vw;
+  height: 100vh;
+}
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+}
+.survey-container{
+  display: flex;
+  
+}
+.card-componenet{
+  margin: 0 5px;
+
+}
+.survey-create-form-container{
+  z-index: 100;
+  border: 1px solid black;
+}
+
