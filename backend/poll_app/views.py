@@ -4,7 +4,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Survey,Question
-from .serializers import SurveySerializer
+from .serializers import SurveySerializer, QuestionSerializer
 from django.utils import timezone
 
 
@@ -53,3 +53,19 @@ def delete_survey(request, pk):
     
     survey.delete()
     return JsonResponse({'status': 'Survey deleted'}, status=status.HTTP_204_NO_CONTENT)
+
+
+
+@api_view(['POST'])
+def get_questions(request):
+    try:
+        survey_id= request.data.get('survey_id')
+        print("sid:",survey_id)
+        survey= Survey.objects.get(id=survey_id)
+        questions=survey.questions.all()
+        serializer= QuestionSerializer(questions,many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+
+    except Exception as e:
+        return Response("error in fetching questions:",status=status.HTTP_400_BAD_REQUEST)

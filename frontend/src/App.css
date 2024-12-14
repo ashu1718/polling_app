@@ -13,20 +13,24 @@ body{
 }
 .survey-container{
   display: flex;
-  
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .card-componenet{
-  margin: 0 5px;
-
+  margin: 5px;
+  min-width: 500px;
+}
+.survey-card-btn{
+  margin: 0 2px;
 }
 .survey-create-form-container{
-  z-index: 1000;
+  
   border: 1px solid black;
   width: 60%;
-  position: relative;
-  top: 40%;
+  position: absolute;
+  top: 20%;
   left: 20%;
-  background-color: rgba(163, 216, 198, 0.307);
+  background-color: rgba(163, 216, 198, 0.807);
 }
 .blur-background {
   filter: blur(5px);
@@ -40,5 +44,13 @@ body{
   background-color: transparent;
 
 }
+.close-btn-question-form{
+  position: relative;
+  left: 48.2%;
+  border: none;
+  background: none;
+}
+
+
 
 

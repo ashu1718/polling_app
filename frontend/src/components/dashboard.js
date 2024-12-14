@@ -5,7 +5,7 @@ import SurveyCard from "./surveyCard";
 import "../App.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { Button } from "@blueprintjs/core";
-const Dashboard = ({setFormVisible, formVisible}) => {
+const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON}) => {
   const [surveys, setSurveys] = useState([]);
   
   useEffect(() => {
@@ -38,19 +38,20 @@ const Dashboard = ({setFormVisible, formVisible}) => {
     setFormVisible(true)
   }
   return (
-    <div className={`dashoard-container ${formVisible===true ? "blur-background" : ""}`} >
+    <div className="dashoard-container">
         <div className="dashboard-header">
           <h2>Survey Dashboard</h2> 
           <Button onClick={handleCreateSurvey} text="Create New Survey" minimal={true} intent="primary" />
           
         </div>
-      <div className="survey-container">
+      <div className= {`survey-container ${(formVisible===true || surveyJSON !== null) ? "blur-background" : ""}`}>
         {surveys.map(survey => (
           <SurveyCard 
             key={survey.id} 
             survey={survey} 
             onDelete={handleSurveyDelete} 
             onClose={handleSurveyClose}
+            setSurveyJson={setSurveyJson}
           />
         ))}
       </div>

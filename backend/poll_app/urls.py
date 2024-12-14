@@ -6,4 +6,5 @@ urlpatterns = [
     path('api/surveys/create', views.create_survey, name='create_survey'),  # POST create survey
     path('api/surveys/close/<int:pk>', views.close_survey, name='close_survey'),  # PUT close survey
     path('api/surveys/delete/<int:pk>', views.delete_survey, name='delete_survey'),  # DELETE delete survey
+    path('api/questions/',views.get_questions,name="get_questions")
 ]
