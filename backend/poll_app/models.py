@@ -1,13 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
-# Create your models here.
-class Testing(models.Model):
-    first_name= models.CharField(max_length=255)
-    last_name= models.CharField(max_length=255)
-    age= models.IntegerField()
-    std= models.IntegerField()
-    marks= models.IntegerField()
 
 class Survey(models.Model):
     name = models.CharField(max_length=100)
@@ -27,18 +21,14 @@ class Question(models.Model):
         return self.title
 
 
-class Choice(models.Model):
-    question = models.ForeignKey(Question, related_name='choices', on_delete=models.CASCADE)
-    text = models.CharField(max_length=255)
+class SurveyResponse(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
+    survey = models.ForeignKey(Survey, related_name='responses', on_delete=models.CASCADE)  
+    responses = models.JSONField()  
+    created_at = models.DateTimeField(default=timezone.now)  
+
+    class Meta:
+        unique_together= ('user','survey')
 
     def __str__(self):
-        return self.text
-
-
-class Response(models.Model):
-    survey = models.ForeignKey(Survey, related_name='responses', on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, related_name='responses', on_delete=models.CASCADE)
-    response_text = models.TextField()
-
-    def __str__(self):
-        return f"Response for {self.question.title}"
+        return f'Response by {self.user.username} to {self.survey.name}'

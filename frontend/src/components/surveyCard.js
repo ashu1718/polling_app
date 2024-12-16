@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import "../App.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { Button, Card, Elevation } from "@blueprintjs/core";
-
+import axiosInstance from './axiosInstance';
 
 const SurveyCard = ({ survey, onDelete, onClose ,setSurveyJson}) => {
   const [isDeleting, setIsDeleting] = useState(false);
-
+  const accessToken = localStorage.getItem('access_token')
 
   const handleDeleteSurvey = () => {
     setIsDeleting(true);
@@ -18,20 +18,21 @@ const SurveyCard = ({ survey, onDelete, onClose ,setSurveyJson}) => {
     onClose(survey.id);
   }
 
-  const handleCardOpen=()=>{
+  const handleCardOpen= async ()=>{
     
-    const response= fetch('http://localhost:8000/api/questions/',{
+    const response= await axiosInstance.post('http://localhost:8000/api/surveys/questions/',{survey_id: survey.id},{
       method:'POST',
       headers:{
         'Content-Type':'application/json',
+        'Authorization': `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({survey_id: survey.id})
-    })
-    .then(res=>res.json())
-    .then(res=>{
+      
+    });
+
+    const res=response.data;
       const question_data = {
+        id: survey.id,
         completedBeforeHtml:"<div><p style='margin: 40px;'>You have already taken this survey.</p></div>",
-        cookieName: survey.id,
         pages: res.map(question => {
           let surveyQuestion = {
             name: question.title,
@@ -52,9 +53,8 @@ const SurveyCard = ({ survey, onDelete, onClose ,setSurveyJson}) => {
           };
         })
       };
-      console.log(question_data);
       setSurveyJson(question_data)
-    })
+   
   }
  
   return (

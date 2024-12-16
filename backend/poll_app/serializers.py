@@ -1,18 +1,18 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Survey, Question, Choice, Response,Testing
+from .models import Survey, Question, SurveyResponse
+from django.contrib.auth.models import User
 
-class PersonSerializer(serializers.ModelSerializer):
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Testing
-        fields = ['id', 'first_name', 'last_name', 'age','std','marks']  # Add fields as needed
+        model = User
+        fields = ('email','username', 'first_name', 'last_name', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
 
-
-class ChoiceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Choice
-        fields = ['id', 'text']
-
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
 
 class QuestionSerializer(serializers.ModelSerializer):
     answer_option = serializers.ListField(child=serializers.CharField(),required=False,allow_null=True)
@@ -48,7 +48,7 @@ class SurveySerializer(serializers.ModelSerializer):
         return survey
 
 
-class ResponseSerializer(serializers.ModelSerializer):
+class SurveyResponseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Response
-        fields = ['survey', 'question', 'response_text']
+        model = SurveyResponse
+        fields = ['user', 'survey', 'responses', 'created_at']

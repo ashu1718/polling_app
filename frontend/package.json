@@ -5,10 +5,12 @@
   "dependencies": {
     "@blueprintjs/core": "^5.16.0",
     "@blueprintjs/icons": "^5.15.0",
+    "@react-login-page/page8": "^1.0.4",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.7.9",
+    "jwt-decode": "^4.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.2",

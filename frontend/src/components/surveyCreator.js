@@ -3,14 +3,15 @@ import CreateQuestionForm from './surveyForm';
 import "../App.css";
 import { Toaster, Intent } from '@blueprintjs/core';
 import axios from 'axios';
+import axiosInstance from './axiosInstance';
 const SurveyCreator = ({setFormVisible}) => {
     const [surveyName,setSurveyName]=useState('')
     const [questions, setQuestions] = useState([]);
     const toasterRef=useRef(null);
+    const accessToken = localStorage.getItem('access_token');
     const handleCreateNextQuestion = (questionData) => {
         // Save the current question to the state
         setQuestions((prevQuestions) => [...prevQuestions, questionData]);
-        console.log('Current Questions:', [...questions, questionData]);
         // toasterRef.current.show({
         //     message: "Question added to current Survey",
         //     intent: Intent.SUCCESS,
@@ -20,7 +21,6 @@ const SurveyCreator = ({setFormVisible}) => {
     const handleCompleteSurvey = async (questionData) => {
         // Save the last question and complete the survey
         setQuestions((prevQuestions) => [...prevQuestions, questionData]);
-        console.log('Survey Completed with Questions:', [...questions, questionData]);
         // toasterRef.show({
         //     message: "Survey Added Successfully",
         //     intent: Intent.SUCCESS,
@@ -32,10 +32,11 @@ const SurveyCreator = ({setFormVisible}) => {
             questions:[...questions,questionData]
         }
         try{
-            const response= await axios.post('http://localhost:8000/api/surveys/create',surveyData, {
+            const response= await axiosInstance.post('http://localhost:8000/api/surveys/create',surveyData, {
                 headers:{
                     "Content-Type":'application/json',
-                }
+                    'Authorization': `Bearer ${accessToken}`,
+                },   
             });
 
         }
