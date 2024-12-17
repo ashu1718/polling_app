@@ -81,7 +81,8 @@ const SurveyCard = ({ survey, onDelete, onClose ,setSurveyJson}) => {
                 >
                 Close Survey
                 </Button>}
-                <Button className='survey-card-btn' intent="primary" onClick={handleCardOpen}>Take Survey</Button>
+                {survey.status !== 'closed' && <Button className='survey-card-btn' intent="primary" onClick={handleCardOpen}>Take Survey</Button>}
+                
             </Card>
         </div>
    

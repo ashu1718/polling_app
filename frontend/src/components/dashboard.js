@@ -1,6 +1,5 @@
 // Dashboard Component
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import SurveyCard from "./surveyCard";
 import "../App.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
@@ -68,8 +67,8 @@ const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setA
   return (
     <div className="dashoard-container">
         <div className="dashboard-header">
-          <h2>Survey Dashboard</h2> 
-          <div>
+          <h2 style={{fontFamily:'cursive'}}>Survey Dashboard</h2> 
+          <div style={{display:'flex'}}>
             <Button onClick={handleCreateSurvey} text="Create New Survey" minimal={true} intent="primary" />
             <Button onClick={handleLogOut} text="Log Out" minimal={true} intent="primary" />
           </div>
