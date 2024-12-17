@@ -22,7 +22,6 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey,setFormVisi
     };
 
     const handleCreateNextQuestion = () => {
-        // Save the current question and its answer type
         
         const questionData = {
             title:questionName,
@@ -30,7 +29,6 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey,setFormVisi
             answer_option: questionType === 'single-choice' || questionType === 'multiple-choice' ? answerOptions : null,
         };
         onCreateNextQuestion(questionData);
-        // Reset the form for the next question
        
         setQuestionName('');
         setQuestionType('single-choice');
@@ -38,7 +36,6 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey,setFormVisi
     };
 
     const handleCompleteSurvey = () => {
-        // Save the current question and complete the survey
         const questionData = {
           title:questionName,
           question_type: questionType,
@@ -54,7 +51,6 @@ const CreateQuestionForm = ({ onCreateNextQuestion, onCompleteSurvey,setFormVisi
         <div className='new-survey-form'>
             <h4>Create a New Question</h4>
             <button onClick={handleFormClose} className="close-btn">
-              {/* Blueprint cross icon */}
               <Icon icon={IconNames.CROSS} />
             </button>
             <div style={{margin:"2px"}}>

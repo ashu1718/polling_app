@@ -6,6 +6,8 @@ import "../App.css";
 import '@blueprintjs/core/lib/css/blueprint.css';
 import { Button } from "@blueprintjs/core";
 import axiosInstance from "./axiosInstance";
+import { toast } from "react-toastify";
+
 const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setAuth}) => {
   const [surveys, setSurveys] = useState([]);
   const accessToken = localStorage.getItem('access_token');
@@ -13,7 +15,7 @@ const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setA
     axiosInstance.get("http://localhost:8000/api/surveys",
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,  // Attach the access token here
+          'Authorization': `Bearer ${accessToken}`,  
         },
       }
     )
@@ -27,12 +29,13 @@ const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setA
     axiosInstance.delete(`http://localhost:8000/api/surveys/delete/${id}`,
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,  // Attach the access token here
+          'Authorization': `Bearer ${accessToken}`,  
         },
       }
     )
       .then(() => {
         setSurveys(surveys.filter(survey => survey.id !== id));
+        toast.info("Survey Deleted Successfully!");
       })
       .catch(error => console.error("Error deleting survey:", error));
   };
@@ -40,15 +43,16 @@ const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setA
     axiosInstance.put( `http://localhost:8000/api/surveys/close/${id}`,{},
       {
         headers: {
-          'Authorization': `Bearer ${accessToken}`,  // Attach the access token here
+          'Authorization': `Bearer ${accessToken}`,  
         },
       }
     )
     .then(()=>{
-      // Update the surveys state to reflect the closed survey
+      
       setSurveys(surveys.map(survey => 
         survey.id === id ? { ...survey, status: 'closed' } : survey
       ));
+      toast.info("Survey Closed Successfully!")
     })
     .catch(e => console.log("error in closing survey",e));
   };
@@ -59,6 +63,7 @@ const Dashboard = ({setFormVisible, formVisible, setSurveyJson, surveyJSON, setA
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     setAuth(false);
+    toast.info("Logged out successfully! kindly visit again")
   }
   return (
     <div className="dashoard-container">
