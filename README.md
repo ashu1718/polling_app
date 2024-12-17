@@ -7,7 +7,7 @@ to use the app-
 
 about the app-
 1. it has 3 models- survey, question and questionResponse
-2. multiple endpoints to create, delete, close, take a survey.
-3. in frontend, libraries like surveyJs, npm are used.
-
--- Toasters are also added for every endpoint.
+2. multiple endpoints to create, delete, close, save and take a survey.
+3. in front end, libraries like surveyJs, npm are used.
+4. login and signup page uses JWT token authorization with an auto access_token refresh mechanism.
+5.  Toasters are also added for every endpoint for better user communication.
